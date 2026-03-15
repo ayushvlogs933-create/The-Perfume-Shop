@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Perfume Shop</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+}
+
+body{
+margin:0;
+background:#f5f5f7;
+color:#1d1d1f;
+}
+
+/* HERO */
+
+.hero{
+height:90vh;
+background:url("https://i.ibb.co/yB0qVJmj/Perfume-Shop.jpg") center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+flex-direction:column;
+color:white;
+}
+
+.hero h1{
+font-size:50px;
+font-weight:700;
+background:rgba(0,0,0,0.4);
+padding:12px 25px;
+border-radius:12px;
+}
+
+.shop-btn{
+margin-top:20px;
+padding:14px 40px;
+background:#0071e3;
+color:white;
+border:none;
+border-radius:30px;
+font-size:18px;
+cursor:pointer;
+}
+
+/* PRODUCTS */
+
+.products{
+padding:60px 20px;
+text-align:center;
+}
+
+.products h2{
+font-size:32px;
+margin-bottom:30px;
+}
+
+.carousel{
+display:flex;
+gap:20px;
+overflow-x:auto;
+scroll-behavior:smooth;
+padding-bottom:10px;
+}
+
+.product{
+min-width:240px;
+background:white;
+border-radius:18px;
+padding:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.product img{
+width:100%;
+border-radius:12px;
+}
+
+.product h3{
+margin:10px 0 5px;
+}
+
+.product button{
+margin-top:10px;
+background:#000;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:20px;
+cursor:pointer;
+}
+
+/* CART ICON */
+
+.cart-icon{
+position:fixed;
+top:20px;
+right:20px;
+background:black;
+color:white;
+width:55px;
+height:55px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
+z-index:999;
+}
+
+.cart-count{
+position:absolute;
+top:-4px;
+right:-4px;
+background:red;
+color:white;
+padding:4px 7px;
+font-size:12px;
+border-radius:50%;
+}
+
+/* CART MODAL */
+
+.cart{
+position:fixed;
+right:-350px;
+top:0;
+width:330px;
+height:100%;
+background:white;
+box-shadow:-5px 0 15px rgba(0,0,0,0.15);
+padding:20px;
+transition:0.4s;
+z-index:1000;
+}
+
+.cart.active{
+right:0;
+}
+
+.cart h2{
+margin-top:0;
+}
+
+.cart-items{
+margin:15px 0;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:8px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+.order-btn{
+margin-top:15px;
+background:#0071e3;
+border:none;
+color:white;
+padding:12px;
+border-radius:25px;
+width:100%;
+cursor:pointer;
+}
+
+/* WHATSAPP */
+
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:28px;
+text-decoration:none;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="cart-icon" onclick="toggleCart()">
+<i class="fa fa-shopping-cart"></i>
+<span id="cartCount" class="cart-count">0</span>
+</div>
+
+
+<section class="hero">
+<h1>The Perfume Shop</h1>
+<button class="shop-btn"
+onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+Shop Now
+</button>
+</section>
+
+
+<section class="products" id="products">
+
+<h2>Our Perfumes</h2>
+
+<div class="carousel">
+
+<div class="product">
+<img src="https://i.ibb.co/pV4NMJR/153632776-118022511-1734424246.jpg">
+<h3>Luxury Oud</h3>
+<p>₹999</p>
+<button onclick="addToCart('Luxury Oud',999)">Add to Cart</button>
+</div>
+
+<div class="product">
+<img src="https://i.ibb.co/qLd1WvZD/71t9w-FKYOc-L-AC-UF350-350-QL80.jpg">
+<h3>Royal Musk</h3>
+<p>₹799</p>
+<button onclick="addToCart('Royal Musk',799)">Add to Cart</button>
+</div>
+
+<div class="product">
+<img src="https://i.ibb.co/FbLRGH9N/Sovaze-graphic-v3.jpg">
+<h3>Sovaze Premium</h3>
+<p>₹899</p>
+<button onclick="addToCart('Sovaze Premium',899)">Add to Cart</button>
+</div>
+
+</div>
+
+</section>
+
+
+<div class="cart" id="cart">
+
+<h2>Your Cart</h2>
+
+<div class="cart-items" id="cartItems"></div>
+
+<input id="name" placeholder="Customer Name">
+
+<input id="phone" placeholder="Phone Number">
+
+<select id="payment">
+<option value="">Select Delivery Option</option>
+<option value="cod">Cash on Delivery</option>
+<option value="upi">Pay by UPI</option>
+</select>
+
+<button class="order-btn" onclick="placeOrder()">Place Order</button>
+
+</div>
+
+
+<a class="whatsapp" href="https://wa.me/7990890909">
+<i class="fab fa-whatsapp"></i>
+</a>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+
+let cart=[]
+
+function addToCart(name,price){
+
+cart.push({name,price})
+
+updateCart()
+
+}
+
+function updateCart(){
+
+document.getElementById("cartCount").innerText=cart.length
+
+let html=""
+
+cart.forEach(p=>{
+html+=`<div>${p.name} - ₹${p.price}</div>`
+})
+
+document.getElementById("cartItems").innerHTML=html
+
+}
+
+function toggleCart(){
+document.getElementById("cart").classList.toggle("active")
+}
+
+(function(){
+emailjs.init("YOUR_PUBLIC_KEY")
+})()
+
+function placeOrder(){
+
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+let payment=document.getElementById("payment").value
+
+let order=cart.map(i=>i.name+" ₹"+i.price).join(",")
+
+if(payment==="cod"){
+
+emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+
+customer_name:name,
+phone:phone,
+order:order,
+payment:"Cash on Delivery"
+
+}).then(()=>{
+
+alert("Order placed successfully!")
+
+})
+
+}
+
+if(payment==="upi"){
+
+let upiLink=`upi://pay?pa=7990889807@fam&pn=The%20Perfume%20Shop&am=&cu=INR`
+
+window.location.href=upiLink
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
